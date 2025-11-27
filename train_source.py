@@ -128,7 +128,7 @@ class Trainer:
     def do_training(self):
         best_acc = 0.0
         for self.current_epoch in tqdm(range(self.args.epochs)):
-            logging.info(f'\n---------------------Epoch: {self.current_epoch} Training...---------------------')
+            logging.info(f'\n------------------------------- Epoch: {self.current_epoch} Training... -------------------------------')
             accuracy = self._do_epoch()
             self._update_learning_rate(self.current_epoch)
 
@@ -140,6 +140,8 @@ class Trainer:
                 torch.save(self.model.state_dict(),
                            os.path.join(self.args.output_folder, f"{self.args.source}_best.pth"))
                 logging.info(f'>>> New Val_best model checkpoint have been saved')
+        logging.info(f'>>> Training completed. Best Val Acc: {best_acc:.4f}')
+        logging.info(f'>>> Model checkpoint and training log have been saved at: {self.args.output_folder}')
 
 
 def ERM_pretrain():
@@ -177,10 +179,10 @@ def ERM_pretrain():
                             format='[%(asctime)s.%(msecs)03d] %(message)s', datefmt='%H:%M:%S')
         logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
-        logging.info("\n****************************")
+        logging.info("\n************************** Configs **************************")
         for key, value in vars(args).items():
             logging.info(f"{key}: {value}")
-        logging.info("****************************\n")
+        logging.info("*************************************************************\n")
 
         logging.info(f">>> Training on dataset {args.dataset} with source domain: {args.source}")
 
