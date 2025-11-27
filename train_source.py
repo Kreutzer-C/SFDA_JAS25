@@ -156,6 +156,9 @@ def ERM_pretrain():
 
     get_data_info(args)
 
+    if args.source is not None and args.source not in args.Domain_ID:
+        raise ValueError(f"Specified Source domain <{args.source}> not in Domain list of dataset: {args.dataset}({args.Domain_ID})")
+    
     domains_to_train = [args.source] if args.source is not None else args.Domain_ID
     
     for domain in domains_to_train:
